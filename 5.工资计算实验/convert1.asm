@@ -1,0 +1,20 @@
+PUBLIC CONVERT_NOT_ZERO
+extrn CONVERT_LOOP:FAR
+CONVERT SEGMENT
+    ASSUME CS:CONVERT
+CONVERT_NOT_ZERO PROC FAR
+  MOV AX, DX                   ; 将余数加载到AX中，用于接下来的逐位转换
+
+  CALL CONVERT_LOOP
+  ; 恢复商并继续处理
+  MOV AX, BX
+  CMP AX, 0
+  JZ END2            ; 如果商为0，跳到结束
+  CALL CONVERT_LOOP
+END2: 
+  RET
+CONVERT_NOT_ZERO ENDP
+
+CONVERT ENDS
+end
+
